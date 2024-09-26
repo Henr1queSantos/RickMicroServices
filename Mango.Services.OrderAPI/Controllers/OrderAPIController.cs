@@ -35,7 +35,7 @@ namespace Mango.Services.OrderAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("GetOrders")]
+        [HttpGet("GetOrders/{userId?}")]
         public ResponseDto? Get(string? userId="")
         {
             try
@@ -62,12 +62,12 @@ namespace Mango.Services.OrderAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("GetOrder/{id:int}")]
-        public ResponseDto? Get(int id)
+        [HttpGet("GetOrder/{orderId:int}")]
+        public ResponseDto? Get(int orderId)
         {
             try
             {
-                OrderHeader orderHeader = _db.OrderHeaders.Include(x =>x.OrderDetails).First(x => x.OrderHeaderId == id);
+                OrderHeader orderHeader = _db.OrderHeaders.Include(x =>x.OrderDetails).First(x => x.OrderHeaderId == orderId);
                 _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
             }
             catch (Exception ex)

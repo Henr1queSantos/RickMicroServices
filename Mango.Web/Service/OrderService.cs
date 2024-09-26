@@ -36,10 +36,14 @@ namespace Mango.Web.Service
 
         public async Task<ResponseDto?> GetAllOrder(string? userId)
         {
+            string requestUrl = string.IsNullOrEmpty(userId)
+            ? SD.OrderAPIBase + "/api/order/GetOrders/"  // No userId in URL
+            : SD.OrderAPIBase + "/api/order/GetOrders/" + userId;  // userId in URL
+
             return await _baseService.SendAsync(new RequestDTO()
             {
                 ApiType = SD.ApiType.Get,
-                Url = SD.OrderAPIBase + "/api/order/GetOrders/",
+                Url = requestUrl,
                 Data = userId
             });
         }
